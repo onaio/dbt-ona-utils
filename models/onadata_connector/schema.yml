@@ -2,11 +2,11 @@
 version: 2
 
 models:
-    - name: my_first_dbt_model
-      description: "A starter dbt model"
+    - name: onadata_from_airbyte
+      description: "A packaged modelt to create a dedicated table from the JSON inside an Ona Data submission ingested via Airbyte"
       columns:
-          - name: id
-            description: "The primary key for this table"
+          - name: _id
+            description: "The primary key for this table, the submission id"
             tests:
                 - unique
                 - not_null
