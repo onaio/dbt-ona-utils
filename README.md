@@ -1,10 +1,8 @@
-Welcome to your new dbt project!
+# Ona Utils 
+Welcome to the project that includes relevant macros and models for internal Ona usage
 
-### Using the starter project
-
-Try running the following commands:
-- dbt run
-- dbt test
+## What's included
+Documentation will follow 
 
 
 ### Resources:
