@@ -1,6 +1,10 @@
 {# Macro takes an airbyte JSON string containing the details of an onadata submission and outputs the SQL to generate a table for each of the keys #}
 {# Optional arguments includes a list of metadata field (exclusion list) that are usually not necessary to port over #}
-{#-- 2022.12.05 AP. This is a V1 version--#}
+{#-- 2022.12.05 AP. This is a V1 version. Limitations include:
+    - All data is stored as text (?)
+    - No lables, no direct link with the table schema
+    - No optimization by database
+    - several others that will come to mind :) --#}
 
 {% macro normalize_onadata_form(
     schema_name="airbyte",
