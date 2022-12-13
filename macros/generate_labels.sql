@@ -1,18 +1,26 @@
 {#-- Creates a "labels_table" from the xform definition --#}
 {#-- The macro DOES NOT join with the form data directly, it just creates the labels from the registry table.--#}
-{#-- V0.1 : ease of use and functionality can be improved.   2022.12.05 AP. Not even sure it fully works  --#}
+{#-- V0.1 : ease of use and functionality can be improved. Needs a specific URI passed as a string around the "" for the argument 
+    --(e.g. "'hello_world'")  --#}
 
-{% macro generate_labels() %}
+{% macro generate_labels(
+    registry_table = "onadata.registry",
+    uri
+) %}
 
 -- find all keys in xform:choices (FIELD NAME - long)
    {%- set form_json -%}
     (select 
     jsonb_object_keys(json -> 'xform:choices')
-    from onadata.registry  order by 1 limit 1 )
+    from {{registry_table}} 
+    where uri = {{uri}} --this can be improved once we're clear on how to get the most recent version
+    order by 1       
+    )
     {%- endset -%}
 
     -- for each key, find all inside dictionary keys  (choices)
-    {% for tablerow in run_query(form_json) %}   
+    {% for tablerow in run_query(form_json) %}  
+    -- looping through {{tablerow}} 
     {{ log('Looping through: ' ~ tablerow, info=True) }}
 
         {# accessing the first value of the row, which is the only one. Unclear why we need to do this, but it works. Problem is that the run_query is returning a funky object #}
@@ -26,7 +34,7 @@
         {%- set choices = run_query(option_json) -%}
 
         --for each choice, find the language options 
-        {%- for choice in choices  %}      
+        {%- for choice in choices  %}   
             {%- set choice_value = choice.values()[0] -%}
             {%- set label_language -%}
                 (select 
@@ -38,7 +46,7 @@
 
             --for each language, store the language and value 
             {%- for language in languages -%}            
-                {%- set language_value = language.values()[0] -%}
+                {%- set language_value = language.values()[0] %}
                 (select 
                 '{{list_option}}' as option_long,
                 (string_to_array('{{list_option}}', '/'))[array_length(string_to_array('{{list_option}}', '/'),1)] as option, 
