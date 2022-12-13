@@ -5,7 +5,7 @@
 
 {% macro generate_labels(
     registry_table = "onadata.registry",
-    uri
+    uri = "'NDC4C_Country_draft?t=json&v=20221122'"
 ) %}
 
 -- find all keys in xform:choices (FIELD NAME - long)
