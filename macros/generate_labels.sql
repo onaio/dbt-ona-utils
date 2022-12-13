@@ -9,7 +9,7 @@
 ) %}
 
 -- find all keys in xform:choices (FIELD NAME - long)
-   {%- set form_json -%}
+   {%- set form_json %}
     (select 
     jsonb_object_keys(json -> 'xform:choices')
     from {{registry_table}} 
@@ -29,7 +29,8 @@
         {%- set option_json -%}
             (select 
             jsonb_object_keys(json -> 'xform:choices' -> '{{list_option}}' )
-            from (select * from onadata.registry  limit 1 ) form2  )
+            from {{registry_table}}   
+            where uri = {{uri}} limit 1 ) 
         {%- endset -%}
         {%- set choices = run_query(option_json) -%}
 
@@ -39,8 +40,8 @@
             {%- set label_language -%}
                 (select 
                 jsonb_object_keys(json -> 'xform:choices' -> '{{list_option}}' -> '{{choice_value}}' )
-                from (select * from onadata.registry 
-                limit 1 ) form3 )
+                from {{registry_table}} 
+                where uri = {{uri}} limit 1 ) 
             {%- endset -%}
             {%- set languages = run_query(label_language) -%}
 
@@ -53,8 +54,8 @@
                 '{{choice_value}}' as label, 
                 '{{language_value}}' as language, 
                 json -> 'xform:choices' -> '{{list_option}}' -> '{{choice_value}}' -> '{{language_value}}' as value
-                from (select * from onadata.registry 
-                limit 1 ) form4 )
+                from {{registry_table}} 
+                where uri = {{uri}} limit 1 )
 
                 {% if not loop.last -%}
                 union all 

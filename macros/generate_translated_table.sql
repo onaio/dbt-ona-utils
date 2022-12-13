@@ -18,7 +18,7 @@ select
 from {{rawtable}} r
 {%- for option in optionslist %}
 left join {{labelstable}} as t{{optionslist.index(option)}} on  t{{optionslist.index(option)}}.option = '{{option}}' 
-    and r.{{option}} = t{{optionslist.index(option)}}.label and t{{optionslist.index(option)}}.language = '{{language}}'
+    and r.{{option}}::varchar = t{{optionslist.index(option)}}.label and t{{optionslist.index(option)}}.language = '{{language}}'
 {%- endfor %}
 
 {% endmacro %}
