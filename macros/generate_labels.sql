@@ -30,7 +30,7 @@
             (select 
             jsonb_object_keys(json -> 'xform:choices' -> '{{list_option}}' )
             from {{registry_table}}   
-            where uri = {{uri}} limit 1 ) 
+            where uri = {{uri}} ) 
         {%- endset -%}
         {%- set choices = run_query(option_json) -%}
 
@@ -41,7 +41,7 @@
                 (select 
                 jsonb_object_keys(json -> 'xform:choices' -> '{{list_option}}' -> '{{choice_value}}' )
                 from {{registry_table}} 
-                where uri = {{uri}} limit 1 ) 
+                where uri = {{uri}} ) 
             {%- endset -%}
             {%- set languages = run_query(label_language) -%}
 
@@ -55,7 +55,7 @@
                 '{{language_value}}' as language, 
                 json -> 'xform:choices' -> '{{list_option}}' -> '{{choice_value}}' -> '{{language_value}}' as value
                 from {{registry_table}} 
-                where uri = {{uri}} limit 1 )
+                where uri = {{uri}} )
 
                 {% if not loop.last -%}
                 union all 
