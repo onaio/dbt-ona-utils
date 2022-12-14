@@ -53,7 +53,7 @@
                 (string_to_array('{{list_option}}', '/'))[array_length(string_to_array('{{list_option}}', '/'),1)] as option, 
                 '{{choice_value}}' as label, 
                 '{{language_value}}' as language, 
-                json -> 'xform:choices' -> '{{list_option}}' -> '{{choice_value}}' -> '{{language_value}}' as value
+                replace((json -> 'xform:choices' -> '{{list_option}}' -> '{{choice_value}}' -> '{{language_value}}')::varchar, '"','') as value
                 from {{registry_table}} 
                 where uri = {{uri}} )
 
