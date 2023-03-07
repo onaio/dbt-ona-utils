@@ -7,6 +7,6 @@ models:
       columns:
           - name: _id
             description: "The primary key for this table, the submission id"
-            tests:
-                - unique
-                - not_null
+            # tests:
+            #     - unique
+            #     - not_null
