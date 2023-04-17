@@ -1,3 +1,5 @@
+--update macro to accept various languages 17-04-2023 SAO
+
 {% macro generate_translated_table(rawtable, labelstable, language) %}
 --language is 'und' when multiple languages do not exist
 
