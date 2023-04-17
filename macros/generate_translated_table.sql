@@ -1,4 +1,5 @@
-{% macro generate_translated_table(rawtable, labelstable, language = 'und') %}
+{% macro generate_translated_table(rawtable, labelstable, language) %}
+--language is 'und' when multiple languages do not exist
 
 {%- set fieldlist =  dbt_utils.get_filtered_columns_in_relation(rawtable) -%}  
 {%- set optionslist = dbt_utils.get_column_values(labelstable, column='option') |list %}
