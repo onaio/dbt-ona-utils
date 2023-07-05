@@ -1,4 +1,4 @@
-{#-- Macro to remove group names from data pused by airbyte connectors, to be used in staging models to rename all columns recursively --#}
+{#-- Macro to remove group names from data pushed by Airbyte Ona Data connector, to be used in staging models to rename all columns recursively,also provides a option for column exclusion --#}
 {#-- Sample usage: in a staging model, {{ remove_group_name('source', 'table', ['group1/column1', 'group2/column1']) }} --#}
 
 
