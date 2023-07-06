@@ -1,9 +1,9 @@
 {#-- Macro to generate a translated table from the submissions and choices table pushed by Airbyte Ona Data connector and remove group names recursively with column exclusion parameter --#}
 {#-- Optional parameters and their defaults: default value of labelstable = "chc__" ~ rawtable[5:], default value of language = "English (en)", exclude_column = [] --#}
-{#-- Example of minimum usage in a model, this utilizes defaults specified above: {{ translate_table_remove_group_name('airbyte', 'sbm__table_name'}} --#}
-{#-- Example of usage in a model with specified language: {{ translate_table_remove_group_name('airbyte', 'sbm__table_name', language='French (fr)' }} --#}
+{#-- Example of minimum usage in a model, this utilizes defaults specified above: {{ generate_translated_table('airbyte', 'sbm__table_name'}} --#}
+{#-- Example of usage in a model with specified language: {{ generate_translated_table('airbyte', 'sbm__table_name', language='French (fr)' }} --#}
 
-{% macro translate_table_remove_group_name(source_name, rawtable, labelstable=None, language=None, exclude_columns=[]) %}
+{% macro generate_translated_table(source_name, rawtable, labelstable=None, language=None, exclude_columns=[]) %}
 
 {%- set labelstable = "chc__" ~ rawtable[5:] if labelstable is none else labelstable -%}
 {%- set language = "English (en)" if language is none else language -%}
