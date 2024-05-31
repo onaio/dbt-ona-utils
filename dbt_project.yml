@@ -3,7 +3,7 @@
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
 name: 'ona_utils'
-version: '0.1.3'
+version: '2.0.0'
 config-version: 2
 
 require-dbt-version: [">=1.0.0"]
@@ -17,19 +17,5 @@ profile: 'default'
 model-paths: ["models"]
 macro-paths: ["macros"]
 
-
-
-vars:
-  # the 'connector_table_name' variable is a default that will be accessible throughout the project, and can be overridden in the dbt run command 
-  connector_table_name: 'form_data'
-  # the 'connector_schema_name' variable is a default that will be accessible throughout the project, and can be overridden in the dbt run command 
-  connector_schema_name: 'onadata'
-
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
-
-models:
-  ona_utils:
-    # Applies to all files under models/onadata_connector/
-    onadata_connector:
-      materialized: table 
