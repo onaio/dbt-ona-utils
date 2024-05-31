@@ -3,7 +3,7 @@
 -- Example of minimum usage in a model, this utilizes defaults specified above: {{ generate_translated_table('airbyte', 'sbm_table_name'}}
 -- Example of usage in a model with specified language: {{ generate_translated_table('airbyte', 'sbm_table_name', language='French (fr)' }}
 
-{% macro generate_translated_table(source_name, rawtable, labelstable=None, language=None, exclude_columns=[]) %}
+{% macro generate_translated_table_legacy(source_name, rawtable, labelstable=None, language=None, exclude_columns=[]) %}
 
     {# Set default values for labelstable and language if not provided #}
     {%- set labelstable = "chc" ~ rawtable[3:] if labelstable is none else labelstable -%}

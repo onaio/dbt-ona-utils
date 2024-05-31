@@ -1,7 +1,7 @@
 {% macro group_names_mapping(source_name, sbm_table, xfm_table, repeat_table) %}
     {% if not repeat_table %}
         {%- set colnames = dbt_utils.get_filtered_columns_in_relation(from=source(source_name, sbm_table)) -%}
-        {%- set xfm_dict = group_field_dictionary(source_name, xfm_table) -%}
+        {%- set xfm_dict = ona_utils.group_field_dictionary(source_name, xfm_table) -%}
     {% else %}
         {%- set colnames = dbt_utils.get_filtered_columns_in_relation(from=ref(sbm_table)) -%}
     {% endif %}
@@ -12,7 +12,7 @@
     {% for column in colnames %}
         {% set fieldname = column %}
         {%- if not repeat_table and column not in exclude_columns %}
-            {% set fieldname = find_index(xfm_dict['airbyte_name'], column, xfm_dict['field']) %}
+            {% set fieldname = ona_utils.find_index(xfm_dict['airbyte_name'], column, xfm_dict['field']) %}
         {% elif repeat_table and column not in exclude_columns and '/' in column %}
             {% set fieldname = fieldname[fieldname.rfind('/')+1:] %}
         {% endif %}
