@@ -3,13 +3,13 @@
 {#-- If the macro is to be used to translate a repeat table model, then the remove group_names and repeat_table parameters need to be True --#}
 {#-- The langueage default is 'undefined' this can be changed by explicitly adding the language parameter when using the macro --#}
 
-{#-- Example of minimum usage with referenced model as input, this utilizes set defaults: {{ generate_translated_table_v4('source', 'model', 'choice_table') }} --#}
-{#-- Example of usage in a referenced model with specified language: {{ generate_translated_table_v4('source', 'model', 'choice_table', language='French (fr)') }} --#}
-{#-- Example of usage in a source using remove group name parameter: {{ generate_translated_table_v4('source', 'table', remove_group_names=True) }} --#}
-{#-- Example of usage in a referenced repeat table using the required parameters: {{ generate_translated_table_v4('source', 'model', 'choice_table', remove_group_names=True, repeat_table=True ) }} }} --#}
+{#-- Example of minimum usage with referenced model as input, this utilizes set defaults: {{ generate_translated_table('source', 'model', 'choice_table') }} --#}
+{#-- Example of usage in a referenced model with specified language: {{ generate_translated_table('source', 'model', 'choice_table', language='French (fr)') }} --#}
+{#-- Example of usage in a source using remove group name parameter: {{ generate_translated_table('source', 'table', remove_group_names=True) }} --#}
+{#-- Example of usage in a referenced repeat table using the required parameters: {{ generate_translated_table('source', 'model', 'choice_table', remove_group_names=True, repeat_table=True ) }} }} --#}
 
 
-{% macro generate_translated_table_v4(source_name, sbm_table, labelstable=None, language=None, xfm_table=None, remove_group_names=False, repeat_table=False, exclude_columns=[]) %}
+{% macro generate_translated_table(source_name, sbm_table, labelstable=None, language=None, xfm_table=None, remove_group_names=False, repeat_table=False, exclude_columns=[]) %}
 
 {%- set xfm_table = "xfm" ~ sbm_table[3:] if remove_group_names and not repeat_table else xfm_table -%}
 {%- set labelstable = "chc" ~ sbm_table[3:] if remove_group_names and not repeat_table else labelstable -%}
@@ -18,7 +18,7 @@
 {% if not remove_group_names %}
     {%- set fieldlist = dbt_utils.get_filtered_columns_in_relation(from=ref(sbm_table)) -%}
 {% else %}
-    {%- set mapping = group_names_mapping(source_name, sbm_table, xfm_table, repeat_table) -%}
+    {%- set mapping = ona_utils.group_names_mapping(source_name, sbm_table, xfm_table, repeat_table) -%}
     {%- set fieldlist = mapping['fieldlist'] %}
     {%- set fieldname_mapping = mapping['fieldname_mapping'] %}
 {% endif %}

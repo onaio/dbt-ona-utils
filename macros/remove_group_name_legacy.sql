@@ -2,7 +2,7 @@
 {#-- Sample usage: in a staging model, {{ remove_group_name('source', 'table', ['group1/column1', 'group2/column1']) }} --#}
 
 
-{% macro remove_group_name(source_name, table_name, exclude_columns=[]) %}
+{% macro remove_group_name_legacy(source_name, table_name, exclude_columns=[]) %}
 {% set colnames = dbt_utils.get_filtered_columns_in_relation(from=source(source_name, table_name)) %}
 
 select 
