@@ -39,7 +39,7 @@ with leveldata as (
 
 select 
     field, 
-    group_prefix || field as airbyte_name
+    replace(group_prefix || field, '__', '_') as airbyte_name
 from leveldata
 
 {%- endset -%}
