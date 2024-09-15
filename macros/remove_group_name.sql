@@ -12,22 +12,20 @@
     {% else %}
         {%- set fieldlist = dbt_utils.get_filtered_columns_in_relation(from=ref(sbm_table)) -%}
     {% endif %}
-
+    
     select 
     {% for field in fieldlist %}
-        {%- if not repeat_table and field not in exclude_columns %}
-            "{{ field }}" as "{{ ona_utils.find_index(xfm_dict['airbyte_name'], field, xfm_dict['field']) }}"
-        {%- elif repeat_table and field not in exclude_columns and '/' in field %}
-            "{{ field }}" as {{ field[field.rfind('/')+1:] }}
+    {% if field not in exclude_columns %}
+        {%- if not repeat_table %}
+            "{{ field }}" as "{{ ona_utils.find_index(xfm_dict['airbyte_name'], field, xfm_dict['field']) }}",
+        {%- elif repeat_table and '/' in field %}
+            "{{ field }}" as {{ field[field.rfind('/')+1:] }},
         {%- else -%}
-            "{{ field }}"
+            "{{ field }}",
         {%- endif %}
-        {%- if not loop.last -%} 
-            ,
-        {%- else -%}
-            {{ "\n" }}
-        {%- endif -%}
+    {% endif %}
     {%- endfor -%}
+    now() as dbt_processed_at
     from 
     {%- if not repeat_table %}
         {{ source(source_name, sbm_table) }}
