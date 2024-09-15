@@ -3,11 +3,6 @@
 -- Sample usage with source as input: {{ remove_group_name('source', 'table', ['group1/column1', 'group2/column1']) }} --#
 -- Sample usage with repeat table as input: {{remove_group_name(sbm_table='repeat_model_name', repeat_table=True, ['group1/column1', 'group2/column1']) }} 
 
--- Macro to remove group names from data pushed by Airbyte Ona Data connector to Destination V2
--- This macro can be used to refrence a source or model(in case of repeat tables) in dbt to rename all columns recursively, also provides a option for column exclusion
--- Sample usage with source as input: {{ remove_group_name('source', 'table', ['group1/column1', 'group2/column1']) }} --#
--- Sample usage with repeat table as input: {{remove_group_name(sbm_table='repeat_model_name', repeat_table=True, ['group1/column1', 'group2/column1']) }} 
-
 {% macro remove_group_name(source_name, sbm_table, xfm_table=None, repeat_table=False, exclude_columns=[]) %}
 
     {% if not repeat_table %}
