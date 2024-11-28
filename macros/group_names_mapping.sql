@@ -1,9 +1,9 @@
-{% macro group_names_mapping(source_name, sbm_table, xfm_table, repeat_table) %}
+{% macro group_names_mapping(source_name, sbm_table, xfm_table, repeat_table,exclude_columns=[]) %}
     {% if not repeat_table %}
-        {%- set colnames = dbt_utils.get_filtered_columns_in_relation(from=source(source_name, sbm_table)) -%}
+        {%- set colnames = dbt_utils.get_filtered_columns_in_relation(from=source(source_name, sbm_table),except=exclude_columns) -%}
         {%- set xfm_dict = ona_utils.group_field_dictionary(source_name, xfm_table) -%}
     {% else %}
-        {%- set colnames = dbt_utils.get_filtered_columns_in_relation(from=ref(sbm_table)) -%}
+        {%- set colnames = dbt_utils.get_filtered_columns_in_relation(from=ref(sbm_table),except=exclude_columns) -%}
     {% endif %}
     {%- set fieldlist = [] %}
     {%- set fieldname_mapping = {} %}

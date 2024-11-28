@@ -18,7 +18,7 @@
 {% if not remove_group_names %}
     {%- set fieldlist = dbt_utils.get_filtered_columns_in_relation(from=ref(sbm_table)) -%}
 {% else %}
-    {%- set mapping = ona_utils.group_names_mapping(source_name, sbm_table, xfm_table, repeat_table) -%}
+    {%- set mapping = ona_utils.group_names_mapping(source_name, sbm_table, xfm_table, repeat_table,exclude_columns) -%}
     {%- set fieldlist = mapping['fieldlist'] %}
     {%- set fieldname_mapping = mapping['fieldname_mapping'] %}
 {% endif %}
